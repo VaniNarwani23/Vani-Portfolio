@@ -109,16 +109,22 @@ html , body{
          opacity: 0;
     }
 }
-#main{
+
+
+#main {
     position: relative;
-    background-color:#151515;
-    overflow: hidden;
+    background-color: #151515;
+    z-index: 99;
 }
-#page1{
-    height: 100%;
+
+#page1 {
+    height: 100vh;
     width: 100%;
-    background-color:#151515 ;
+    /* background-color: #151515; */
+    position: relative;
+    z-index: 100;
 }
+
 #page1 #nav{
     display: flex;
     align-items: center;

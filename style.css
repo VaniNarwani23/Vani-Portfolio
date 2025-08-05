@@ -21,11 +21,11 @@ html , body{
     mix-blend-mode: difference;
     transform: translate(-50%, -50%);
 }
-#loader{
+#loader {
     height: 100%;
     width: 100%;
     position: fixed;
-    z-index: 999;
+    z-index: 9999;
     background-color: #030303;
     padding: 25vh 10vw;
 }

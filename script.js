@@ -1,3 +1,5 @@
+const { footer } = require("motion/react-client");
+
 function locomotiveAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 

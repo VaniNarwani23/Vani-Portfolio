@@ -1,4 +1,3 @@
-
 function locomotiveAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -7,14 +6,12 @@ function locomotiveAnimation() {
   const locoScroll = new LocomotiveScroll({
     el: scrollContainer,
     smooth: true,
-    lerp: 0.1, // optional smoothness tuning
+    lerp: 0.1,
     getDirection: true
   });
 
-  // Update ScrollTrigger on scroll
   locoScroll.on("scroll", ScrollTrigger.update);
 
-  // Setup ScrollTrigger proxy for LocomotiveScroll
   ScrollTrigger.scrollerProxy(scrollContainer, {
     scrollTop(value) {
       return arguments.length
@@ -32,12 +29,24 @@ function locomotiveAnimation() {
     pinType: scrollContainer.style.transform ? "transform" : "fixed",
   });
 
-  // Refresh ScrollTrigger and update LocomotiveScroll on resize or update
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-
-  // Initial refresh
   ScrollTrigger.refresh();
+
+  // ✅ Add this to make nav links work
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault(); // prevent default behavior
+
+      const targetSelector = link.getAttribute('data-target');
+      const targetElement = document.querySelector(targetSelector);
+      
+      if (targetElement) {
+        locoScroll.scrollTo(targetElement); // smooth scroll
+      }
+    });
+  });
 }
+
 
 
 function loadingAnimation() {

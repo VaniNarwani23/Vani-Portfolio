@@ -1,0 +1,385 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plain Light';
+    color: #fff;
+}
+html , body{
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+#crsr{
+    height: 2vw;
+    width: 2vw;
+    border-radius: 50%;
+    border: 1px solid #ffffffbe;
+    position: fixed;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transform: translate(-50%, -50%);
+}
+#loader{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    background-color: #030303;
+    padding: 25vh 10vw;
+}
+.line{
+    /* background-color: red; */
+    height: fit-content;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3vw;
+    
+}    
+#line1-part1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+    
+}
+#line1-part1 h5,#line1-part1 h6{
+   font-size: 3vw;
+   font-weight: 100;
+   font-family: "silk serif";
+}
+#line1-part1 h5{
+    width: 5vw;
+    text-align: right;
+}
+#logo{
+    width: 80px;
+    height: auto;
+}
+#logo img {
+    height: 80px;
+    width: auto;
+}
+.line h1{
+    font-size:6.7vw;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+.line h2{
+    font-size: 5vw;
+    text-transform: uppercase;
+    font-weight: 900;
+    opacity: 0;
+    animation-name: loaderAnime;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+
+@keyframes loaderAnime{
+    0%{
+        font-family: "plain light";
+        -webkit-text-stroke: 1px #fff;
+        color: #fff;
+        font-weight: 500;
+        opacity: 1;
+    } 
+    48%{
+        font-family: "plain light";
+        -webkit-text-stroke: 1px #fff;
+        color: #fff;
+        font-weight: 500;
+        opacity: 0;
+    }
+    50%{
+        font-family: 'silk serif';
+         -webkit-text-stroke: 1px #fff;
+         color: transparent;
+         font-weight: 500;
+         opacity: 1;
+    }
+     100%{
+        font-family: 'silk serif';
+         -webkit-text-stroke: 1px #fff;
+         color: transparent;
+         font-weight: 500;
+         opacity: 0;
+    }
+}
+#main{
+    position: relative;
+    background-color:#151515;
+    overflow: hidden;
+}
+#page1{
+    height: 100%;
+    width: 100%;
+    background-color:#151515 ;
+}
+#page1 #nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.3vw 5.5vw;
+}
+#nav-part2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+
+}
+#nav-part2 h4{
+    font-size: 0.8vw;
+    font-weight: 500;
+}
+.hero{
+    width: 72%;
+    margin-left: 27%;
+    height: fit-content;
+    overflow: hidden;
+    align-items: center;
+    display: flex;
+    position: relative;
+    z-index: 9999;
+
+}
+.hero:nth-child(2){
+    margin-top: 18vh;
+
+}
+.hero h1{
+    font-size: 7.1vw;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 7.2vw;
+}
+
+.hero h2{
+    font-size: 7.2vw;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 7.2vw;
+   
+    
+}
+.hero h3{
+    padding: 4px;
+    font-size: 7.2vw;
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 7.2vw;
+    padding-top: 2vh;
+    border-bottom: 2px solid #fff;
+}
+
+
+
+
+.hero h2:hover{
+    -webkit-text-stroke:2px #fff ;
+    color: transparent;
+    font-weight: 500;
+    border-bottom: 0.5vw solid #ffffff00;
+}
+
+#page2 {
+    height: 100vh;
+    position: relative;
+    padding: 27vw 5.1vw;
+    
+}
+
+#page2 > h3 {
+    font-size: 4.8vmax;
+    font-family:  "Gilroy";
+    margin-bottom: 0vmax;
+}
+
+#page2 > h3 span {
+    font-size: 4.8vmax;
+    font-family:  "Gilroy";
+    color: #38cdfa;
+}
+
+#page2 > h5 {
+     font-size: 2.2vmax;
+    font-family:  "Gilroy";
+    font-weight: 500;
+    margin-bottom: 1.4vmax;
+
+}
+
+#page2 img{
+    height: 5vmax;
+    margin-right: 12px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 5px;
+    position: relative;
+    border-radius: 8px;
+}
+
+#page3 {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #151515;
+    position: relative;
+    padding: 17vh 2vw;
+    margin-bottom: 20vh;
+    margin-top: 20vh;
+}
+#page3-content{
+    width: 72vw;
+    position: relative;
+    margin-left:20% ;
+
+}
+#page3-content h1{
+    font-size:7vw ;
+    text-transform: uppercase;
+
+}
+#page3-content .underline{
+    height: 2px;
+    width: 100%;
+    background-color:#fff ;
+    margin-top: 5vw  0;
+
+}
+#page3-content>p{
+    font-size: 2.05vw;
+    width: 80%;
+    margin-top: 1.5vw;
+    margin-bottom: 3vw;
+}
+
+#page4{
+    min-height: 100vh;
+    width: 100%;
+    padding: 7vh 0;
+}
+
+.elem {
+    white-space: nowrap;
+    overflow-x: hidden;
+    margin-bottom: -2vw;
+}
+
+.elem h1 {
+    font-size: 7vw;
+    -webkit-text-stroke: 1px #fff;
+    font-weight: 400;
+    text-transform: uppercase;
+    /* background-color: red; */
+    color: transparent;
+    display: inline-block;
+    margin-right: 16px;
+    -webkit-animation-name: anime;
+            animation-name: anime;
+    -webkit-animation-duration: 12s;
+            animation-duration: 12s;
+    -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes anime {
+    from {
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+    }
+
+    to {
+        -webkit-transform: translateX(calc(-100% - 20px));
+                transform: translateX(calc(-100% - 20px));
+    }
+}
+
+@keyframes anime {
+    from {
+        -webkit-transform: translateX(0);
+                transform: translateX(0);
+    }
+
+    to {
+        -webkit-transform: translateX(calc(-100% - 20px));
+                transform: translateX(calc(-100% - 20px));
+    }
+}
+
+
+.elem2 {
+    white-space: nowrap;
+    overflow-x: hidden;
+    margin-bottom: -2vw;
+}
+
+.elem2 h1 {
+    font-size: 7vw;
+    -webkit-text-stroke: 1px #fff;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: transparent;
+    display: inline-block;
+    -webkit-transform: translateX(calc(-100% - 20px));
+        -ms-transform: translateX(calc(-100% - 20px));
+            transform: translateX(calc(-100% - 20px));
+    -webkit-animation-name: anime;
+            animation-name: anime;
+    -webkit-animation-duration: 12s;
+            animation-duration: 12s;
+    -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+    animation-direction: reverse;
+}
+
+.elem span {
+    font-style: italic;
+    font-family: "silk serif";
+    color: transparent;
+}
+
+.elem2 span {
+    font-style: italic;
+    font-family: "silk serif";
+    color: transparent;
+}
+#footer{
+    height: 80vh;
+    width: 100%;
+    position: relative;
+    padding-left:28vw ;
+    margin-top: 6vw;
+}
+#footer h1{
+    font-size: 8vw;
+
+}
+.underline{
+    height: 2px;
+    width: 100%;
+    background-color:#fff;
+    margin: 3vw 0;
+}
+#footer-div{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-right: 15vw;
+    padding-top:4vw ;
+
+}
+.box{
+    width: 20% ;
+}
+#footer-div h3{
+    font-size: 1.2vw;
+
+}

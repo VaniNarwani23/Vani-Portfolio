@@ -6,10 +6,14 @@
     font-family: 'Plain Light';
     color: #fff;
 }
+img, video{ max-width: 100%; height: auto; }
 html , body{
     height: 100%;
     overflow: hidden;
     width: 100%;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 #crsr {
     height: 2vw;
@@ -117,6 +121,18 @@ html , body{
     position: relative;
     background-color: #151515;
     z-index: 99;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+    backface-visibility: hidden;
+}
+
+/* Locomotive helpers */
+[data-scroll-container]{
+    min-height: 100vh;
+}
+[data-scroll-section]{
+    position: relative;
+    will-change: auto;
 }
 
 #page1 {
@@ -195,10 +211,9 @@ html , body{
 }
 
 #page2 {
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
-    padding: 27vw 5.1vw;
-    
+    padding: 27vw 5.1vw 10vw 5.1vw;
 }
 
 #page2 > h3 {
@@ -218,7 +233,7 @@ html , body{
     font-family:  "Gilroy";
     font-weight: 500;
     margin-bottom: 1.4vmax;
-
+    line-height: 1.25;
 }
 
 #page2 img{
@@ -229,6 +244,8 @@ html , body{
     padding: 5px;
     position: relative;
     border-radius: 8px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 #page3 {
@@ -390,4 +407,220 @@ html , body{
 #footer-div h3{
     font-size: 1.2vw;
 
+}
+
+.mail-alt a{
+    font-size: 0.95rem;
+    opacity: 0.85;
+    text-decoration: underline;
+}
+
+/* Education */
+#page5{
+    min-height: 100vh;
+    width: 100%;
+    background-color: #151515;
+    position: relative;
+    padding: 17vh 2vw;
+}
+#education-content{
+    width: 72vw;
+    margin-left: 20%;
+}
+#education-content h1{
+    font-size: 7vw;
+    text-transform: uppercase;
+}
+.edu-timeline{
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.edu-item h3{
+    font-size: 2rem;
+}
+.edu-item p{
+    font-size: 1.2rem;
+    opacity: 0.85;
+}
+.edu-highlights{
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+/* Enhanced Education timeline visuals */
+.edu-timeline{
+    position: relative;
+    margin-top: 3rem;
+    padding-left: 2.25rem;
+}
+.edu-line{
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(56,205,250,0.6), rgba(255,255,255,0.1));
+    box-shadow: 0 0 12px rgba(56,205,250,0.35);
+}
+.edu-item{
+    position: relative;
+    margin-bottom: 2rem;
+}
+.edu-dot{
+    position: absolute;
+    left: -0.35rem;
+    top: 0.2rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, #38cdfa 0%, #1e1e1e 60%);
+    box-shadow: 0 0 14px rgba(56,205,250,0.6);
+}
+.edu-card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    backdrop-filter: blur(4px);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.edu-card:hover{
+    border-color: rgba(56,205,250,0.8);
+    transform: translateY(-2px);
+}
+.edu-meta{
+    font-size: 1.05rem;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+}
+.edu-chip{
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.85rem;
+    padding: 0.1rem 0.5rem;
+    border: 1px solid #38cdfa;
+    border-radius: 999px;
+}
+.edu-highlights{
+    margin-top: 0.75rem;
+    margin-left: 1.1rem;
+}
+
+/* Projects */
+#page6{
+    min-height: 100vh;
+    width: 100%;
+    background-color: #151515;
+    position: relative;
+    padding: 17vh 5vw;
+}
+#projects-content h1{
+    font-size: 7vw;
+    text-transform: uppercase;
+}
+.projects-grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.project-card{
+    display: flex;
+    flex-direction: column;
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.project-card:hover{
+    transform: translateY(-4px);
+    border-color: #38cdfa;
+}
+.project-image{
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0f0f0f;
+    display: grid;
+    place-items: center;
+}
+.project-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.project-body{
+    padding: 1rem 1.2rem 1.2rem 1.2rem;
+}
+.project-body h3{
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+}
+.project-body p{
+    font-size: 1rem;
+    opacity: 0.9;
+}
+.project-tags{
+    margin-top: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.project-tags span{
+    font-size: 0.85rem;
+    background: #0f0f0f;
+    border: 1px solid #2a2a2a;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px){
+    #nav-part2 h4{ font-size: 1.4vw; }
+    #footer{ padding-left: 12vw; }
+    #page3-content, #education-content{ width: 80vw; margin-left: 10%; }
+    #page3-content>p{ font-size: 2.2vw; }
+    .projects-grid{ grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px){
+    #nav{ padding: 5vw; }
+    #nav-part2{ gap: 4vw; flex-wrap: wrap; }
+    #nav-part2 h4{ font-size: 3vw; }
+    .hero{ width: 90%; margin-left: 5%; }
+    .hero h1, .hero h2, .hero h3{ font-size: 12vw; line-height: 12vw; }
+    #page2{ padding: 24vw 5vw 16vw 5vw; }
+    #page2 img{ height: 10vmax; }
+    #page3{ padding: 10vh 5vw; margin: 10vh 0; }
+    #page3-content, #education-content{ width: 90vw; margin-left: 5%; }
+    #page3-content>p{ font-size: 4vw; width: 100%; }
+    #page4 .elem h1, #page4 .elem2 h1{ font-size: 12vw; }
+    #projects-content h1, #education-content h1, #page3-content h1{ font-size: 12vw; }
+    .projects-grid{ grid-template-columns: 1fr; }
+    #footer{ padding-left: 5vw; height: auto; padding-top: 8vh; padding-bottom: 8vh; }
+    #footer h1{ font-size: 12vw; }
+    #footer-div{ flex-direction: column; gap: 2rem; padding-right: 5vw; }
+    .box{ width: 100%; }
+    #footer-div h3{ font-size: 4vw; }
+    #page5{ padding: 12vh 5vw; }
+}
+
+@media (max-width: 480px){
+    #nav-part2 h4{ font-size: 3.6vw; }
+    .hero h1, .hero h2, .hero h3{ font-size: 14vw; line-height: 14vw; }
+    #page2 img{ height: 12vmax; }
+    .project-body h3{ font-size: 1.25rem; }
+    .project-body p{ font-size: 0.95rem; }
+}
+
+/* Laptop wide adjustments */
+@media (min-width: 1200px){
+    #footer{ padding-left: 18vw; }
+}
+
+/* Extra responsive tweak for education */
+@media (max-width: 768px){
+    .edu-card{ padding: 1rem; }
 }

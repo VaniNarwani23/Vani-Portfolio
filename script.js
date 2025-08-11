@@ -6,8 +6,10 @@ function locomotiveAnimation() {
   const locoScroll = new LocomotiveScroll({
     el: scrollContainer,
     smooth: true,
-    lerp: 0.1,
-    getDirection: true
+    lerp: 0.09,
+    getDirection: true,
+    smartphone: { smooth: true },
+    tablet: { smooth: true }
   });
 
   locoScroll.on("scroll", ScrollTrigger.update);
@@ -32,6 +34,20 @@ function locomotiveAnimation() {
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
 
+  // Ensure updates after load and late-loading assets
+  window.addEventListener('load', () => {
+    locoScroll.update();
+    ScrollTrigger.refresh();
+  });
+  document.querySelectorAll('img').forEach((img) => {
+    if (!img.complete) {
+      img.addEventListener('load', () => {
+        locoScroll.update();
+        ScrollTrigger.refresh();
+      }, { once: true });
+    }
+  });
+
   // ✅ Add this to make nav links work
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -43,6 +59,20 @@ function locomotiveAnimation() {
       if (targetElement) {
         locoScroll.scrollTo(targetElement); // smooth scroll
       }
+    });
+  });
+
+  // Ensure project cards always open their links in a new tab
+  document.querySelectorAll('.project-card[href]').forEach((card) => {
+    card.addEventListener('click', (e) => {
+      const href = card.getAttribute('href');
+      if (!href || href === '#') return; // nothing to open
+      // If Locomotive or any other handler blocks default, force open
+      if (!e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        window.open(href, '_blank', 'noopener');
+      }
+      e.stopPropagation();
     });
   });
 }
@@ -109,44 +139,42 @@ function cursorAnimation() {
   Shery.makeMagnet("#nav-part2");
 }
 function footerAnimation() {
-
-  var clutter = ""
-  var clutter2 = ""
-  document.querySelector("#footer h1").textContent.split("").forEach(function (elem) {
+  const footerH1 = document.querySelector("#footer h1");
+  if (!footerH1) return;
+  let clutter = "";
+  footerH1.textContent.split("").forEach(function (elem) {
     clutter += `<span>${elem}</span>`
-  })
-  document.querySelector("#footer h1").innerHTML = clutter
-  document.querySelector("#footer h2").textContent.split("").forEach(function (elem) {
-    clutter2 += `<span>${elem}</span>`
-  })
-  document.querySelector("#footer h2").innerHTML = clutter2
-
-
-  document.querySelector("#footer-text").addEventListener("mouseenter", function () {
-    gsap.to("#footer h1 span", {
-      opacity: 0,
-      stagger: 0.05
-    })
-    gsap.to("#footer h2 span", {
-      delay: 0.35,
-      opacity: 1,
-      stagger: 0.1
-    })
-  })
-  document.querySelector("#footer-text").addEventListener("mouseleave", function () {
-    gsap.to("#footer h1 span", {
-      opacity: 1,
-      stagger: 0.1,
-      delay: 0.35,
-
-    })
-    gsap.to("#footer h2 span", {
-      opacity: 0,
-      stagger: 0.05
-    })
-  })
+  });
+  footerH1.innerHTML = clutter;
+  // Make the hover interaction optional/safe
+  const footerText = document.querySelector('#footer-text');
+  const footerH2 = document.querySelector('#footer h2');
+  if (footerText && footerH2) {
+    let clutter2 = "";
+    footerH2.textContent.split("").forEach(function (elem) {
+      clutter2 += `<span>${elem}</span>`
+    });
+    footerH2.innerHTML = clutter2;
+    footerText.addEventListener('mouseenter', function(){
+      gsap.to('#footer h1 span', { opacity: 0, stagger: 0.05 });
+      gsap.to('#footer h2 span', { delay: 0.35, opacity: 1, stagger: 0.1 });
+    });
+    footerText.addEventListener('mouseleave', function(){
+      gsap.to('#footer h1 span', { opacity: 1, stagger: 0.1, delay: 0.35 });
+      gsap.to('#footer h2 span', { opacity: 0, stagger: 0.05 });
+    });
+  }
 }
 cursorAnimation()
 loadingAnimation()
 locomotiveAnimation()
 footerAnimation()
+
+// Ensure mail links are not blocked by smooth scroll
+['#mailto-link', '#gmail-link'].forEach((sel) => {
+  const el = document.querySelector(sel);
+  if (!el) return;
+  el.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+});

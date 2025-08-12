@@ -221,6 +221,16 @@ body.has-locomotive{
     border-bottom: 0.5vw solid #ffffff00;
 }
 
+/* On phones, keep "Full Stack" filled (no stroke) */
+@media (hover: none) and (pointer: coarse), (max-width: 768px){
+    #hero4 h2,
+    #hero4 h2:hover{
+        -webkit-text-stroke: 0 !important;
+        color: #fff !important;
+        border-bottom: none !important;
+    }
+}
+
 #page2 {
     min-height: 100vh;
     position: relative;

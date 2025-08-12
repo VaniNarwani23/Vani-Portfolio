@@ -4,6 +4,43 @@ function locomotiveAnimation() {
   const scrollContainer = document.querySelector("#main");
   if (!scrollContainer) return;
 
+  // Mobile menu toggle and integration (runs on all devices)
+  const menuToggle = document.querySelector('#menu-toggle');
+  const mobileMenu = document.querySelector('#mobile-menu');
+  const closeMenu = () => {
+    if (!mobileMenu) return;
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+  const openMenu = () => {
+    if (!mobileMenu) return;
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = mobileMenu.getAttribute('aria-hidden') === 'false';
+      if (isOpen) closeMenu(); else openMenu();
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) closeMenu();
+    });
+    document.querySelectorAll('.mobile-menu-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSelector = link.getAttribute('data-target');
+        const targetElement = document.querySelector(targetSelector);
+        if (!targetElement) return;
+        closeMenu();
+        // Use native smooth scroll for reliability on phones
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
   // Fallback to native scroll on small screens to ensure reliability
   const useLoco = window.matchMedia('(min-width: 768px)').matches;
   if (!useLoco) {
@@ -82,43 +119,6 @@ function locomotiveAnimation() {
       }
     });
   });
-
-  // Mobile menu toggle and integration
-  const menuToggle = document.querySelector('#menu-toggle');
-  const mobileMenu = document.querySelector('#mobile-menu');
-  const closeMenu = () => {
-    if (!mobileMenu) return;
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  };
-  const openMenu = () => {
-    if (!mobileMenu) return;
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  };
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = mobileMenu.getAttribute('aria-hidden') === 'false';
-      if (isOpen) closeMenu(); else openMenu();
-    });
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) closeMenu();
-    });
-    document.querySelectorAll('.mobile-menu-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetSelector = link.getAttribute('data-target');
-        const targetElement = document.querySelector(targetSelector);
-        if (!targetElement) return;
-        closeMenu();
-        // Always use native smooth on mobile menu action to avoid race with locomotive
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-  }
 
   // Mobile stability refreshes
   window.addEventListener('load', () => {

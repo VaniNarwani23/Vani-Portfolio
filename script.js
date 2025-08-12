@@ -2,11 +2,31 @@ function locomotiveAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
   const scrollContainer = document.querySelector("#main");
+  if (!scrollContainer) return;
+
+  // Fallback to native scroll on small screens to ensure reliability
+  const useLoco = window.matchMedia('(min-width: 768px)').matches;
+  if (!useLoco) {
+    document.body.classList.remove('has-locomotive');
+    // Native smooth scroll for nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSelector = link.getAttribute('data-target');
+        const targetElement = document.querySelector(targetSelector);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    // Project links should just open normally
+    return;
+  }
 
   const locoScroll = new LocomotiveScroll({
     el: scrollContainer,
     smooth: true,
-    lerp: 0.09,
+    lerp: 0.1,
     getDirection: true,
     smartphone: { smooth: true },
     tablet: { smooth: true }
@@ -33,6 +53,7 @@ function locomotiveAnimation() {
 
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
+  document.body.classList.add('has-locomotive');
 
   // Ensure updates after load and late-loading assets
   window.addEventListener('load', () => {
@@ -57,8 +78,18 @@ function locomotiveAnimation() {
       const targetElement = document.querySelector(targetSelector);
       
       if (targetElement) {
-        locoScroll.scrollTo(targetElement); // smooth scroll
+        locoScroll.scrollTo(targetElement, { offset: 0, duration: 800 }); // smooth scroll
       }
+    });
+  });
+
+  // Mobile stability refreshes
+  window.addEventListener('load', () => {
+    setTimeout(() => { locoScroll.update(); ScrollTrigger.refresh(); }, 0);
+  });
+  ['orientationchange','resize'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      setTimeout(() => { locoScroll.update(); ScrollTrigger.refresh(); }, 120);
     });
   });
 

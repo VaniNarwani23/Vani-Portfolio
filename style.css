@@ -9,11 +9,19 @@
 img, video{ max-width: 100%; height: auto; }
 html , body{
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
+    overflow-x: hidden;
     width: 100%;
     overscroll-behavior: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Enable body lock only when Locomotive is active */
+body.has-locomotive{
+    overflow: hidden;
 }
 #crsr {
     height: 2vw;
@@ -124,11 +132,14 @@ html , body{
     will-change: transform;
     transform: translate3d(0,0,0);
     backface-visibility: hidden;
+    touch-action: pan-y;
+    overflow-x: hidden;
 }
 
 /* Locomotive helpers */
 [data-scroll-container]{
     min-height: 100vh;
+    touch-action: pan-y;
 }
 [data-scroll-section]{
     position: relative;
@@ -591,14 +602,16 @@ html , body{
     #nav-part2 h4{ font-size: 3vw; }
     .hero{ width: 90%; margin-left: 5%; }
     .hero h1, .hero h2, .hero h3{ font-size: 12vw; line-height: 12vw; }
-    #page2{ padding: 24vw 5vw 16vw 5vw; }
+    #page2{ padding: 18vw 5vw 12vw 5vw; min-height: auto; }
     #page2 img{ height: 10vmax; }
-    #page3{ padding: 10vh 5vw; margin: 10vh 0; }
+    #page3{ padding: 8vh 5vw; margin: 6vh 0; min-height: auto; }
     #page3-content, #education-content{ width: 90vw; margin-left: 5%; }
     #page3-content>p{ font-size: 4vw; width: 100%; }
+    #page4{ min-height: auto; padding: 6vh 0; }
     #page4 .elem h1, #page4 .elem2 h1{ font-size: 12vw; }
     #projects-content h1, #education-content h1, #page3-content h1{ font-size: 12vw; }
-    .projects-grid{ grid-template-columns: 1fr; }
+    .projects-grid{ grid-template-columns: 1fr; gap: 1.25rem; }
+    #page5, #page6{ min-height: auto; }
     #footer{ padding-left: 5vw; height: auto; padding-top: 8vh; padding-bottom: 8vh; }
     #footer h1{ font-size: 12vw; }
     #footer-div{ flex-direction: column; gap: 2rem; padding-right: 5vw; }
@@ -610,7 +623,9 @@ html , body{
 @media (max-width: 480px){
     #nav-part2 h4{ font-size: 3.6vw; }
     .hero h1, .hero h2, .hero h3{ font-size: 14vw; line-height: 14vw; }
+    #page2{ padding: 16vw 5vw 12vw 5vw; }
     #page2 img{ height: 12vmax; }
+    .projects-grid{ gap: 1rem; }
     .project-body h3{ font-size: 1.25rem; }
     .project-body p{ font-size: 0.95rem; }
 }

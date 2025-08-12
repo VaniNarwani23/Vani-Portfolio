@@ -171,6 +171,34 @@ body.has-locomotive{
     font-size: 0.8vw;
     font-weight: 500;
 }
+
+/* Mobile menu base */
+#menu-toggle{
+    display: none;
+    font-size: 8vw;
+    background: transparent;
+    border: none;
+    color: #fff;
+}
+#mobile-menu{
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
+    display: none;
+    z-index: 9998;
+}
+#mobile-menu[aria-hidden="false"]{ display: block; }
+.mobile-menu-content{
+    position: absolute;
+    top: 20vh; left: 0; right: 0;
+    display: grid;
+    justify-items: center;
+    gap: 2rem;
+}
+.mobile-menu-content h4{
+    font-size: 8vw;
+}
 .hero{
     width: 72%;
     margin-left: 27%;

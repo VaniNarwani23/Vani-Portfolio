@@ -83,6 +83,52 @@ function locomotiveAnimation() {
     });
   });
 
+  // Mobile menu toggle and integration
+  const menuToggle = document.querySelector('#menu-toggle');
+  const mobileMenu = document.querySelector('#mobile-menu');
+  const closeMenu = () => {
+    if (!mobileMenu) return;
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+  };
+  const openMenu = () => {
+    if (!mobileMenu) return;
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+  };
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = mobileMenu.getAttribute('aria-hidden') === 'false';
+      if (isOpen) closeMenu(); else openMenu();
+    });
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) closeMenu();
+    });
+    document.querySelectorAll('.mobile-menu-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSelector = link.getAttribute('data-target');
+        const targetElement = document.querySelector(targetSelector);
+        if (!targetElement) return;
+        closeMenu();
+        if (window.matchMedia('(min-width: 768px)').matches) {
+          // Smooth via loco on larger screens
+          const container = document.querySelector('#main');
+          const instance = container && container.locomotive;
+          if (instance && instance.scrollTo) {
+            instance.scrollTo(targetElement, { offset: 0, duration: 800 });
+          } else {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        } else {
+          // Native on phones
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
   // Mobile stability refreshes
   window.addEventListener('load', () => {
     setTimeout(() => { locoScroll.update(); ScrollTrigger.refresh(); }, 0);

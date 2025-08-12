@@ -4,62 +4,7 @@ function locomotiveAnimation() {
   const scrollContainer = document.querySelector("#main");
   if (!scrollContainer) return;
 
-  // Mobile menu toggle and integration (runs on all devices)
-  const menuToggle = document.querySelector('#menu-toggle');
-  const mobileMenu = document.querySelector('#mobile-menu');
-  const closeMenu = () => {
-    if (!mobileMenu) return;
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  };
-  const openMenu = () => {
-    if (!mobileMenu) return;
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  };
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = mobileMenu.getAttribute('aria-hidden') === 'false';
-      if (isOpen) closeMenu(); else openMenu();
-    });
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) closeMenu();
-    });
-    document.querySelectorAll('.mobile-menu-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetSelector = link.getAttribute('data-target');
-        const targetElement = document.querySelector(targetSelector);
-        if (!targetElement) return;
-        closeMenu();
-        // Use native smooth scroll for reliability on phones
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-  }
-
-  // Fallback to native scroll on small screens to ensure reliability
-  const useLoco = window.matchMedia('(min-width: 768px)').matches;
-  if (!useLoco) {
-    document.body.classList.remove('has-locomotive');
-    // Native smooth scroll for nav links
-    document.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetSelector = link.getAttribute('data-target');
-        const targetElement = document.querySelector(targetSelector);
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-    // Project links should just open normally
-    return;
-  }
-
+  // Initialize Locomotive Scroll
   const locoScroll = new LocomotiveScroll({
     el: scrollContainer,
     smooth: true,
@@ -69,6 +14,7 @@ function locomotiveAnimation() {
     tablet: { smooth: true }
   });
 
+  scrollContainer.locomotive = locoScroll;
   locoScroll.on("scroll", ScrollTrigger.update);
 
   ScrollTrigger.scrollerProxy(scrollContainer, {
@@ -88,64 +34,122 @@ function locomotiveAnimation() {
     pinType: scrollContainer.style.transform ? "transform" : "fixed",
   });
 
+  ScrollTrigger.defaults({ scroller: scrollContainer });
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
-  document.body.classList.add('has-locomotive');
 
-  // Ensure updates after load and late-loading assets
-  window.addEventListener('load', () => {
-    locoScroll.update();
-    ScrollTrigger.refresh();
-  });
-  document.querySelectorAll('img').forEach((img) => {
-    if (!img.complete) {
-      img.addEventListener('load', () => {
-        locoScroll.update();
-        ScrollTrigger.refresh();
-      }, { once: true });
+  // Mobile menu toggle
+  const menuToggle = document.querySelector('#menu-toggle');
+  const mobileMenu = document.querySelector('#mobile-menu');
+  
+  const closeMenu = () => {
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+  
+  const openMenu = () => {
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+  
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = mobileMenu.getAttribute('aria-hidden') === 'false';
+      if (isOpen) closeMenu(); else openMenu();
+    });
+    
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) closeMenu();
+    });
+  }
+
+  // Smooth scrolling for nav links
+  const scrollToSection = (targetElement) => {
+    if (!targetElement) return;
+    
+    const offset = 100; // Adjust based on your navbar height
+    
+    if (locoScroll) {
+      locoScroll.scrollTo(targetElement, {
+        offset: -offset,
+        duration: 1000,
+        disableLerp: false
+      });
+    } else {
+      const targetPosition = targetElement.offsetTop - offset;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
     }
-  });
+    
+    closeMenu();
+  };
 
-  // ✅ Add this to make nav links work
+  // Handle nav link clicks
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
-      e.preventDefault(); // prevent default behavior
-
+      e.preventDefault();
       const targetSelector = link.getAttribute('data-target');
       const targetElement = document.querySelector(targetSelector);
+      scrollToSection(targetElement);
+    });
+  });
+
+  // Update active nav link on scroll
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('[data-scroll-section]');
+  
+  function updateActiveLink() {
+    let fromTop = locoScroll ? locoScroll.scroll.instance.scroll.y : window.scrollY;
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = `#${section.id}`;
       
-      if (targetElement) {
-        locoScroll.scrollTo(targetElement, { offset: 0, duration: 800 }); // smooth scroll
+      if (fromTop >= sectionTop - 200 && fromTop < sectionTop + sectionHeight - 200) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-target') === sectionId) {
+            link.classList.add('active');
+          }
+        });
       }
     });
+  }
+  
+  // Listen to scroll events
+  if (locoScroll) {
+    locoScroll.on('scroll', updateActiveLink);
+  } else {
+    window.addEventListener('scroll', updateActiveLink);
+  }
+  
+  // Initialize active link
+  updateActiveLink();
+
+  // Refresh on resize
+  window.addEventListener('resize', () => {
+    setTimeout(() => {
+      locoScroll.update();
+      ScrollTrigger.refresh();
+    }, 100);
   });
 
-  // Mobile stability refreshes
-  window.addEventListener('load', () => {
-    setTimeout(() => { locoScroll.update(); ScrollTrigger.refresh(); }, 0);
-  });
-  ['orientationchange','resize'].forEach(evt => {
-    window.addEventListener(evt, () => {
-      setTimeout(() => { locoScroll.update(); ScrollTrigger.refresh(); }, 120);
-    });
-  });
-
-  // Ensure project cards always open their links in a new tab
-  document.querySelectorAll('.project-card[href]').forEach((card) => {
+  // Ensure project cards open in new tab
+  document.querySelectorAll('.project-card[href]').forEach(card => {
     card.addEventListener('click', (e) => {
-      const href = card.getAttribute('href');
-      if (!href || href === '#') return; // nothing to open
-      // If Locomotive or any other handler blocks default, force open
       if (!e.ctrlKey && !e.metaKey) {
         e.preventDefault();
-        window.open(href, '_blank', 'noopener');
+        window.open(card.getAttribute('href'), '_blank', 'noopener');
       }
-      e.stopPropagation();
     });
   });
 }
-
-
 
 function loadingAnimation() {
   var tl = gsap.timeline();
@@ -191,7 +195,7 @@ function loadingAnimation() {
   tl.from("#nav", {
     opacity: 0
   });
-  tl.from("#hero h1,#hero2 h1 ,#hero3  h1,#hero4 h2,#hero5 h3", {
+  tl.from("#hero1 h1,#hero2 h1,#hero3 h1,#hero4 h2,#hero5 h3", {
     y: 120,
     stagger: 0.2,
   });
@@ -206,6 +210,7 @@ function cursorAnimation() {
   });
   Shery.makeMagnet("#nav-part2");
 }
+
 function footerAnimation() {
   const footerH1 = document.querySelector("#footer h1");
   if (!footerH1) return;
@@ -233,6 +238,7 @@ function footerAnimation() {
     });
   }
 }
+
 cursorAnimation()
 loadingAnimation()
 locomotiveAnimation()

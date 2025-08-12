@@ -90,11 +90,13 @@ function locomotiveAnimation() {
     if (!mobileMenu) return;
     mobileMenu.setAttribute('aria-hidden', 'true');
     if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
   };
   const openMenu = () => {
     if (!mobileMenu) return;
     mobileMenu.setAttribute('aria-hidden', 'false');
     if (menuToggle) menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
   };
   if (menuToggle && mobileMenu) {
     menuToggle.addEventListener('click', (e) => {
@@ -112,19 +114,8 @@ function locomotiveAnimation() {
         const targetElement = document.querySelector(targetSelector);
         if (!targetElement) return;
         closeMenu();
-        if (window.matchMedia('(min-width: 768px)').matches) {
-          // Smooth via loco on larger screens
-          const container = document.querySelector('#main');
-          const instance = container && container.locomotive;
-          if (instance && instance.scrollTo) {
-            instance.scrollTo(targetElement, { offset: 0, duration: 800 });
-          } else {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        } else {
-          // Native on phones
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        // Always use native smooth on mobile menu action to avoid race with locomotive
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
   }

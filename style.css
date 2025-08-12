@@ -186,7 +186,7 @@ body.has-locomotive{
     background: rgba(0,0,0,0.85);
     backdrop-filter: blur(6px);
     display: none;
-    z-index: 9998;
+    z-index: 10001;
 }
 #mobile-menu[aria-hidden="false"]{ display: block; }
 .mobile-menu-content{
@@ -262,7 +262,7 @@ body.has-locomotive{
 #page2 {
     min-height: 100vh;
     position: relative;
-    padding: 27vw 5.1vw 10vw 5.1vw;
+    padding: 20vw 5.1vw 8vw 5.1vw;
 }
 
 #page2 > h3 {
@@ -302,9 +302,9 @@ body.has-locomotive{
     width: 100%;
     background-color: #151515;
     position: relative;
-    padding: 17vh 2vw;
-    margin-bottom: 20vh;
-    margin-top: 20vh;
+    padding: 14vh 2vw;
+    margin-bottom: 12vh;
+    margin-top: 12vh;
 }
 #page3-content{
     width: 72vw;
@@ -636,8 +636,8 @@ body.has-locomotive{
 
 @media (max-width: 768px){
     #nav{ padding: 5vw; }
-    #nav-part2{ gap: 4vw; flex-wrap: wrap; }
-    #nav-part2 h4{ font-size: 3vw; }
+    #nav-part2{ display: none; }
+    #menu-toggle{ display: block; }
     .hero{ width: 90%; margin-left: 5%; }
     .hero h1, .hero h2, .hero h3{ font-size: 12vw; line-height: 12vw; }
     #page2{ padding: 18vw 5vw 12vw 5vw; min-height: auto; }

@@ -639,3 +639,42 @@ body.has-locomotive{
 @media (max-width: 768px){
     .edu-card{ padding: 1rem; }
 }
+
+/* Typographic responsive scaling */
+.hero h1, .hero h2, .hero h3{
+    font-size: clamp(28px, 7.2vw, 92px);
+    line-height: 1.02;
+}
+#nav-part2 h4{
+    font-size: clamp(12px, 1.2vw, 16px);
+}
+#page2 > h3{
+    font-size: clamp(22px, 5.5vw, 56px);
+}
+#page2 > h3 span{
+    font-size: inherit;
+}
+#page2 > h5{
+    font-size: clamp(14px, 2.6vw, 28px);
+}
+#page3-content h1, #projects-content h1, #education-content h1{
+    font-size: clamp(28px, 7vw, 88px);
+}
+#page3-content>p{
+    font-size: clamp(14px, 1.8vw, 20px);
+}
+.edu-item h3{
+    font-size: clamp(16px, 2.2vw, 28px);
+}
+.edu-item p, .edu-meta{
+    font-size: clamp(13px, 1.6vw, 18px);
+}
+.project-body h3{
+    font-size: clamp(16px, 2vw, 22px);
+}
+.project-body p{
+    font-size: clamp(13px, 1.6vw, 16px);
+}
+#footer h1{
+    font-size: clamp(28px, 8vw, 96px);
+}

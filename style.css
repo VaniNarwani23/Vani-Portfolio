@@ -197,7 +197,9 @@ html , body{
     right: -100%;
     width: 70%;
     height: 100vh;
-    background-color: #151515;
+    background-color: rgba(21, 21, 21, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
     padding: 20vh 10vw;
     transition: right 0.5s ease;
@@ -214,6 +216,7 @@ html , body{
     right: 30px;
     font-size: 24px;
     cursor: pointer;
+    color: white;
 }
 
 #mobile-menu-links {
@@ -226,6 +229,8 @@ html , body{
     font-size: 5vw;
     cursor: pointer;
     position: relative;
+    color: white;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 #mobile-menu-links h4::after {

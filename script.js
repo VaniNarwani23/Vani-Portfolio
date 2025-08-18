@@ -108,6 +108,119 @@ function cursorAnimation() {
   });
   Shery.makeMagnet("#nav-part2");
 }
+
+function mobileMenuAnimation() {
+  const mobileMenuBtn = document.querySelector("#mobile-menu-btn");
+  const mobileMenu = document.querySelector("#mobile-menu");
+  const mobileMenuClose = document.querySelector("#mobile-menu-close");
+  const mobileMenuLinks = document.querySelectorAll("#mobile-menu-links .nav-link");
+  
+  // Open mobile menu
+  mobileMenuBtn.addEventListener("click", () => {
+    mobileMenu.classList.add("show");
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
+    
+    // Animate menu items
+    gsap.fromTo("#mobile-menu-links h4", 
+      { opacity: 0, y: 30 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.6, 
+        stagger: 0.1, 
+        ease: "power2.out",
+        delay: 0.2
+      }
+    );
+  });
+  
+  // Close mobile menu
+  function closeMobileMenu() {
+    mobileMenu.classList.remove("show");
+    document.body.style.overflow = "auto"; // Restore scrolling
+  }
+  
+  mobileMenuClose.addEventListener("click", closeMobileMenu);
+  
+  // Close menu when clicking on a link
+  mobileMenuLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      setTimeout(closeMobileMenu, 300); // Small delay for smooth transition
+    });
+  });
+  
+  // Close menu when clicking outside (on the backdrop)
+  mobileMenu.addEventListener("click", (e) => {
+    if (e.target === mobileMenu) {
+      closeMobileMenu();
+    }
+  });
+  
+  // Close menu on escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && mobileMenu.classList.contains("show")) {
+      closeMobileMenu();
+    }
+  });
+}
+
+function enhancedAnimations() {
+  // Enhanced scroll animations for new sections
+  gsap.registerPlugin(ScrollTrigger);
+  
+  // Certifications animation
+  gsap.fromTo(".cert-card", 
+    { opacity: 0, y: 50 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.2,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: "#page7",
+        start: "top 80%",
+        scroller: "#main"
+      }
+    }
+  );
+  
+  // Enhanced project cards animation
+  gsap.fromTo(".project-card", 
+    { opacity: 0, scale: 0.9 },
+    {
+      opacity: 1,
+      scale: 1,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: "#page6",
+        start: "top 80%",
+        scroller: "#main"
+      }
+    }
+  );
+  
+  // Skills container animation
+  gsap.fromTo("#page2 img", 
+    { opacity: 0, scale: 0.8, rotation: -10 },
+    {
+      opacity: 1,
+      scale: 1,
+      rotation: 0,
+      duration: 0.5,
+      stagger: 0.05,
+      ease: "back.out(1.7)",
+      scrollTrigger: {
+        trigger: "#page2",
+        start: "top 70%",
+        scroller: "#main"
+      }
+    }
+  );
+}
+
 function footerAnimation() {
 function mobileMenuAnimation() {
   const mobileMenuBtn = document.querySelector("#mobile-menu-btn");
@@ -229,8 +342,6 @@ function enhancedAnimations() {
   })
   document.querySelector("#footer h1").innerHTML = clutter
 
-
-
   
   // Enhanced footer hover effect
   document.querySelector("#footer h1").addEventListener("mouseenter", function () {
@@ -249,10 +360,9 @@ function enhancedAnimations() {
     })
   })
 }
-cursorAnimation()
+
 // Initialize all functions
+cursorAnimation()
 loadingAnimation()
 locomotiveAnimation()
 footerAnimation()
-mobileMenuAnimation()
-enhancedAnimations()

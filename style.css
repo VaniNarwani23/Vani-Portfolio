@@ -311,6 +311,13 @@ html , body{
     opacity: 1;
 }
 
+/* Enhanced mobile menu functionality */
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
 .hero{
     width: 72%;
     margin-left: 27%;
@@ -823,6 +830,11 @@ html , body{
     #page3-content>p{ font-size: 2.2vw; }
     .projects-grid{ grid-template-columns: 1fr 1fr; }
     .cert-grid{ grid-template-columns: 1fr 1fr; }
+    
+    /* Better tablet experience */
+    .hero h1, .hero h2, .hero h3{ font-size: 9vw; line-height: 9vw; }
+    #page2 img{ height: 6vmax; }
+    .skills-container{ gap: 12px; }
 }
 
 @media (max-width: 768px){
@@ -830,31 +842,97 @@ html , body{
     #nav-part2{ display: none; }
     #mobile-menu-btn { display: block; }
     
+    /* Enhanced mobile navigation */
+    #mobile-menu-btn {
+        position: relative;
+        z-index: 1002;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        padding: 8px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    #mobile-menu-btn:hover {
+        background: rgba(56, 205, 250, 0.1);
+        color: #38cdfa;
+    }
+    
+    /* Improved mobile menu */
+    #mobile-menu {
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+    }
+    
+    #mobile-menu-links h4 {
+        font-size: 2.2rem;
+        padding: 15px 20px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-align: center;
+    }
+    
+    #mobile-menu-links h4:hover {
+        background: rgba(56, 205, 250, 0.1);
+        transform: translateY(-2px);
+    }
+    
     .hero{ width: 90%; margin-left: 5%; }
     .hero h1, .hero h2, .hero h3{ font-size: 12vw; line-height: 12vw; }
+    .hero:nth-child(2){ margin-top: 12vh; }
     
     #page2{ padding: 24vw 5vw 16vw 5vw; }
     #page2 > h3{ font-size: 8vw; }
     #page2 > h5{ font-size: 4vw; }
     #page2 img{ height: 8vmax; }
+    .skills-container{ 
+        gap: 8px; 
+        padding: 0 5px;
+        justify-content: center;
+    }
     
     #page3{ padding: 10vh 5vw; margin: 10vh 0; }
     #page3-content, #education-content, #certifications-content{ width: 90vw; margin-left: 5%; }
-    #page3-content>p{ font-size: 4vw; width: 100%; }
+    #page3-content>p{ 
+        font-size: 4vw; 
+        width: 100%; 
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
     
     #page4 .elem h1, #page4 .elem2 h1{ font-size: 12vw; }
     
     #projects-content h1, #education-content h1, #certifications-content h1, #page3-content h1{ font-size: 12vw; }
     .projects-grid{ grid-template-columns: 1fr; }
+    .project-card{ 
+        margin-bottom: 1.5rem;
+        border-radius: 16px;
+    }
+    .project-body{ padding: 1.5rem; }
+    .project-body h3{ font-size: 1.4rem; }
+    .project-body p{ font-size: 1rem; line-height: 1.5; }
+    
     .cert-grid{ grid-template-columns: 1fr; }
-    .cert-card{ padding: 1.5rem; flex-direction: column; text-align: center; }
+    .cert-card{ 
+        padding: 1.5rem; 
+        flex-direction: column; 
+        text-align: center;
+        border-radius: 16px;
+    }
     .cert-icon{ font-size: 2.5rem; margin-bottom: 1rem; }
     
     #footer{ padding-left: 5vw; height: auto; padding-top: 8vh; padding-bottom: 8vh; }
     #footer h1{ font-size: 12vw; }
     #footer-div{ flex-direction: column; gap: 2rem; padding-right: 5vw; }
     .box{ width: 100%; }
-    #footer-div h3{ font-size: 4vw; }
+    #footer-div h3{ 
+        font-size: 4vw; 
+        padding: 10px 0;
+        text-align: center;
+    }
     
     #page5{ padding: 12vh 5vw; }
     #page7{ padding: 12vh 5vw; }
@@ -862,67 +940,110 @@ html , body{
     .edu-item h3 { font-size: 1.5rem; }
     .edu-item p { font-size: 1rem; }
     .edu-highlights li { font-size: 0.9rem; }
-    
-    /* Mobile menu improvements */
-    #mobile-menu-links h4 { 
-        font-size: 2rem; 
-        margin: 0.5rem 0;
-    }
-    #mobile-menu { padding: 0 20px; }
+    .edu-timeline{ padding-left: 1.5rem; }
+    .edu-card{ padding: 1.2rem; }
 }
 
 @media (max-width: 480px){
+    /* Extra small mobile devices */
+    #nav{ padding: 4vw; }
+    
     .hero h1, .hero h2, .hero h3{ font-size: 14vw; line-height: 14vw; }
+    .hero:nth-child(2){ margin-top: 8vh; }
+    
     #page2 > h3{ font-size: 10vw; }
     #page2 > h5{ font-size: 5vw; }
     #page2 img{ height: 10vmax; }
+    .skills-container{ gap: 6px; }
+    
     .project-body h3{ font-size: 1.25rem; }
     .project-body p{ font-size: 0.95rem; }
-    #mobile-menu-links h4 { font-size: 1.8rem; }
+    .project-body{ padding: 1.2rem; }
+    
+    #mobile-menu-links h4 { 
+        font-size: 1.8rem; 
+        padding: 12px 15px;
+    }
+    
     #page3-content>p { font-size: 5vw; }
-    .cert-card{ padding: 1rem; }
+    .cert-card{ 
+        padding: 1rem; 
+        margin-bottom: 1rem;
+    }
     .cert-icon{ font-size: 2rem; }
     .cert-info h3{ font-size: 1.2rem; }
+    
+    #footer h1{ font-size: 14vw; }
+    #footer-div h3{ font-size: 5vw; }
+    
+    /* Better touch targets */
+    #mobile-menu-btn {
+        padding: 12px;
+        font-size: 22px;
+    }
 }
 
 /* Laptop wide adjustments */
 @media (min-width: 1200px){
     #footer{ padding-left: 18vw; }
     #certifications-content{ width: 65vw; margin-left: 25%; }
+    
+    /* Enhanced desktop experience */
+    .hero h1, .hero h2, .hero h3{ font-size: 6.5vw; line-height: 6.5vw; }
+    #page2 img{ height: 4.5vmax; }
+    .skills-container{ gap: 18px; }
 }
 
-/* Extra responsive tweak for education */
-@media (max-width: 768px){
-    .edu-card{ padding: 1rem; }
+/* Ultra-wide screens */
+@media (min-width: 1600px){
+    .hero h1, .hero h2, .hero h3{ font-size: 6vw; line-height: 6vw; }
+    #page2 > h3{ font-size: 4vmax; }
+    #page2 > h5{ font-size: 2vmax; }
+    #page3-content>p{ font-size: 1.8vw; }
 }
 
-/* Enhanced mobile experience */
-@media (max-width: 768px) {
-    /* Improved touch targets */
-    #mobile-menu-btn {
-        padding: 10px;
-        font-size: 20px;
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero h1, .hero h2, .hero h3{ font-size: 8vw; line-height: 8vw; }
+    .hero:nth-child(2){ margin-top: 6vh; }
+    #page2{ padding: 15vw 5vw 10vw 5vw; }
+    #mobile-menu-links h4{ font-size: 1.6rem; }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    #page2 img, .project-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    /* Already optimized for dark theme */
+}
+
+/* Print styles */
+@media print {
+    #mobile-menu, #crsr, #loader {
+        display: none !important;
     }
     
-    /* Better spacing for mobile */
-    .skills-container {
-        gap: 10px;
-        justify-content: center;
-        padding: 0 10px;
+    body {
+        background: white !important;
+        color: black !important;
     }
     
-    /* Improved readability */
-    #page3-content > p {
-        line-height: 1.6;
-        margin-bottom: 2rem;
-    }
-    
-    /* Better project cards on mobile */
-    .project-card {
-        margin-bottom: 1rem;
-    }
-    
-    .project-body {
-        padding: 1.5rem;
+    .hero h1, .hero h2, .hero h3 {
+        color: black !important;
     }
 }

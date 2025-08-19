@@ -1,0 +1,12 @@
+{
+  "name": "vani-narwani-portfolio",
+  "version": "1.0.0",
+  "description": "Vani Narwani's personal portfolio website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["portfolio", "web-development", "full-stack"],
+  "author": "Vani Narwani",
+  "license": "ISC"
+}

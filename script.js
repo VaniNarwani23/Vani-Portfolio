@@ -19,12 +19,7 @@ function locomotiveAnimation() {
         : locoScroll.scroll.instance.scroll.y;
     },
     getBoundingClientRect() {
-      return {
-        top: 0,
-        left: 0,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      };
+      return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
     },
     pinType: scrollContainer.style.transform ? "transform" : "fixed",
   });
@@ -32,31 +27,22 @@ function locomotiveAnimation() {
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
 
-  // ✅ Add this to make nav links work
+  // ✅ Smooth scroll nav links
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
-      e.preventDefault(); // prevent default behavior
-
+      e.preventDefault();
       const targetSelector = link.getAttribute('data-target');
       const targetElement = document.querySelector(targetSelector);
-      
       if (targetElement) {
-        locoScroll.scrollTo(targetElement); // smooth scroll
+        locoScroll.scrollTo(targetElement);
       }
     });
   });
 }
 
-
-
 function loadingAnimation() {
   var tl = gsap.timeline();
-  tl.from(".line h1", {
-    y: 150,
-    stagger: 0.25,
-    duration: 0.6,
-    delay: 0.5,
-  });
+  tl.from(".line h1", { y: 150, stagger: 0.25, duration: 0.6, delay: 0.5 });
   tl.from("#line1-part1", {
     opacity: 0,
     onStart: function () {
@@ -71,82 +57,57 @@ function loadingAnimation() {
       }, 33);
     }
   });
-  tl.to(".line h2", {
-    animationName: "loaderAnime",
-    opacity: 1
-  });
-  tl.to("#loader", {
-    opacity: 0,
-    duration: 0.2,
-    delay: 3,
-  });
-  tl.from("#page1", {
-    delay: 0.2,
-    y: -1600,
-    opacity: 0,
-    duration: 0.6,
-    ease: "power4"
-  });
-  tl.to("#loader", {
-    display: "none",
-  });
-  tl.from("#nav", {
-    opacity: 0
-  });
-  tl.from("#hero h1,#hero2 h1 ,#hero3  h1,#hero4 h2,#hero5 h3", {
-    y: 120,
-    stagger: 0.2,
-  });
+  tl.to("#loader", { opacity: 0, duration: 0.2, delay: 3 });
+  tl.from("#page1", { y: -1600, opacity: 0, duration: 0.6, ease: "power4" });
+  tl.to("#loader", { display: "none" });
+  tl.from("#nav", { opacity: 0 });
 }
 
 function cursorAnimation() {
   document.addEventListener("mousemove", function (dets) {
-    gsap.to("#crsr", {
-      left: dets.x,
-      top: dets.y
-    });
+    gsap.to("#crsr", { left: dets.x, top: dets.y });
   });
-  Shery.makeMagnet("#nav-part2");
 }
-function footerAnimation() {
 
-  var clutter = ""
-  var clutter2 = ""
+function footerAnimation() {
+  var clutter = "", clutter2 = "";
   document.querySelector("#footer h1").textContent.split("").forEach(function (elem) {
     clutter += `<span>${elem}</span>`
   })
-  document.querySelector("#footer h1").innerHTML = clutter
+  document.querySelector("#footer h1").innerHTML = clutter;
   document.querySelector("#footer h2").textContent.split("").forEach(function (elem) {
     clutter2 += `<span>${elem}</span>`
   })
-  document.querySelector("#footer h2").innerHTML = clutter2
-
+  document.querySelector("#footer h2").innerHTML = clutter2;
 
   document.querySelector("#footer-text").addEventListener("mouseenter", function () {
-    gsap.to("#footer h1 span", {
-      opacity: 0,
-      stagger: 0.05
-    })
-    gsap.to("#footer h2 span", {
-      delay: 0.35,
-      opacity: 1,
-      stagger: 0.1
-    })
+    gsap.to("#footer h1 span", { opacity: 0, stagger: 0.05 })
+    gsap.to("#footer h2 span", { delay: 0.35, opacity: 1, stagger: 0.1 })
   })
   document.querySelector("#footer-text").addEventListener("mouseleave", function () {
-    gsap.to("#footer h1 span", {
-      opacity: 1,
-      stagger: 0.1,
-      delay: 0.35,
-
-    })
-    gsap.to("#footer h2 span", {
-      opacity: 0,
-      stagger: 0.05
-    })
+    gsap.to("#footer h1 span", { opacity: 1, stagger: 0.1, delay: 0.35 })
+    gsap.to("#footer h2 span", { opacity: 0, stagger: 0.05 })
   })
 }
-cursorAnimation()
-loadingAnimation()
-locomotiveAnimation()
-footerAnimation()
+
+cursorAnimation();
+loadingAnimation();
+locomotiveAnimation();
+footerAnimation();
+
+// ✅ Mobile Menu Toggle
+const mobileMenuBtn = document.querySelector("#mobile-menu-btn");
+const mobileMenu = document.querySelector("#mobile-menu");
+const mobileMenuClose = document.querySelector("#mobile-menu-close");
+
+mobileMenuBtn.addEventListener("click", () => {
+  mobileMenu.classList.add("show");
+});
+mobileMenuClose.addEventListener("click", () => {
+  mobileMenu.classList.remove("show");
+});
+document.querySelectorAll("#mobile-menu-links .nav-link").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileMenu.classList.remove("show");
+  });
+});

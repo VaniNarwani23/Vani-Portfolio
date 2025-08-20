@@ -365,7 +365,7 @@ body.menu-open {
 #page2 {
     min-height: 100vh;
     position: relative;
-    padding: 27vw 5.1vw 10vw 5.1vw;
+    padding: 16vh 5.1vw 10vh 5.1vw;
 }
 
 #page2 > h3 {
@@ -415,8 +415,8 @@ body.menu-open {
     background-color: #151515;
     position: relative;
     padding: 17vh 2vw;
-    margin-bottom: 20vh;
-    margin-top: 20vh;
+    margin-bottom: 10vh;
+    margin-top: 10vh;
 }
 #page3-content{
     width: 72vw;
@@ -746,6 +746,14 @@ body.menu-open {
 #certifications-content h1{
     font-size: 7vw;
     text-transform: uppercase;
+}
+/* Center Certifications section and heading */
+#certifications-content{
+    margin-left: auto;
+    margin-right: auto;
+}
+#certifications-content h1{
+    text-align: center;
 }
 .cert-grid{
     display: grid;

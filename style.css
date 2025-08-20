@@ -190,29 +190,21 @@ html , body{
     font-size: 24px;
     cursor: pointer;
     z-index: 1001;
-    transition: transform 0.3s ease;
-}
-
-#mobile-menu-btn:hover {
-    transform: scale(1.1);
 }
 
 #mobile-menu {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 100%;
+    width: 70%;
     height: 100vh;
-    background: linear-gradient(135deg, rgba(21, 21, 21, 0.98) 0%, rgba(30, 30, 30, 0.95) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background-color: rgba(21, 21, 21, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    overflow: hidden;
+    padding: 20vh 10vw;
+    transition: right 0.5s ease;
+    border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 #mobile-menu.show {
@@ -221,100 +213,39 @@ html , body{
 
 #mobile-menu-close {
     position: absolute;
-    top: 40px;
-    right: 40px;
-    font-size: 28px;
+    top: 30px;
+    right: 30px;
+    font-size: 24px;
     cursor: pointer;
     color: white;
-    transition: transform 0.3s ease, color 0.3s ease;
-    z-index: 1001;
-}
-
-#mobile-menu-close:hover {
-    transform: rotate(90deg) scale(1.1);
-    color: #38cdfa;
 }
 
 #mobile-menu-links {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    align-items: center;
-    width: 100%;
-    padding: 0 40px;
+    gap: 30px;
 }
 
 #mobile-menu-links h4 {
-    font-size: 2.5rem;
+    font-size: 5vw;
     cursor: pointer;
     position: relative;
     color: white;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.4s ease;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: slideInUp 0.6s ease forwards;
-}
-
-#mobile-menu-links h4:nth-child(1) { animation-delay: 0.1s; }
-#mobile-menu-links h4:nth-child(2) { animation-delay: 0.2s; }
-#mobile-menu-links h4:nth-child(3) { animation-delay: 0.3s; }
-#mobile-menu-links h4:nth-child(4) { animation-delay: 0.4s; }
-#mobile-menu-links h4:nth-child(5) { animation-delay: 0.5s; }
-#mobile-menu-links h4:nth-child(6) { animation-delay: 0.6s; }
-
-@keyframes slideInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#mobile-menu-links h4:hover {
-    color: #38cdfa;
-    transform: translateX(10px) scale(1.05);
-    text-shadow: 0 0 20px rgba(56, 205, 250, 0.5);
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 #mobile-menu-links h4::after {
     content: '';
     position: absolute;
     width: 0;
-    height: 2px;
-    bottom: -8px;
+    height: 1px;
+    bottom: -2px;
     left: 0;
     background-color: #38cdfa;
-    transition: width 0.4s ease;
-    box-shadow: 0 0 10px rgba(56, 205, 250, 0.5);
+    transition: width 0.3s ease;
 }
 
 #mobile-menu-links h4:hover::after {
-    width: 100%;
-}
-
-/* Mobile menu overlay effect */
-#mobile-menu::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at center, rgba(56, 205, 250, 0.1) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-#mobile-menu.show::before {
-    opacity: 1;
-}
-
-/* Enhanced mobile menu functionality */
-body.menu-open {
-    overflow: hidden;
-    position: fixed;
     width: 100%;
 }
 
@@ -731,319 +662,74 @@ body.menu-open {
     border-radius: 999px;
 }
 
-/* Certifications */
-#page7{
-    min-height: 100vh;
-    width: 100%;
-    background-color: #151515;
-    position: relative;
-    padding: 17vh 5vw;
-}
-#certifications-content{
-    width: 72vw;
-    margin-left: 20%;
-}
-#certifications-content h1{
-    font-size: 7vw;
-    text-transform: uppercase;
-}
-.cert-grid{
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-.cert-card{
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 2rem;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-}
-.cert-card::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #38cdfa, #00d4ff);
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-}
-.cert-card:hover::before{
-    transform: scaleX(1);
-}
-.cert-card:hover{
-    transform: translateY(-8px);
-    border-color: rgba(56, 205, 250, 0.3);
-    box-shadow: 0 20px 40px rgba(56, 205, 250, 0.1);
-}
-.cert-icon{
-    font-size: 3rem;
-    color: #38cdfa;
-    min-width: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.cert-info h3{
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-    color: #fff;
-}
-.cert-issuer{
-    font-size: 1rem;
-    color: #38cdfa;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
-}
-.cert-date{
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-bottom: 1rem;
-}
-.cert-skills{
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-}
-.cert-skills span{
-    font-size: 0.8rem;
-    background: rgba(56, 205, 250, 0.1);
-    border: 1px solid rgba(56, 205, 250, 0.3);
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    color: #38cdfa;
-}
-
 /* Responsive adjustments */
 @media (max-width: 1024px){
     #nav-part2 h4{ font-size: 1.4vw; }
     #footer{ padding-left: 12vw; }
-    #page3-content, #education-content, #certifications-content{ width: 80vw; margin-left: 10%; }
+    #page3-content, #education-content{ width: 80vw; margin-left: 10%; }
     #page3-content>p{ font-size: 2.2vw; }
     .projects-grid{ grid-template-columns: 1fr 1fr; }
-    .cert-grid{ grid-template-columns: 1fr 1fr; }
-    
-    /* Better tablet experience */
-    .hero h1, .hero h2, .hero h3{ font-size: 9vw; line-height: 9vw; }
-    #page2 img{ height: 6vmax; }
-    .skills-container{ gap: 12px; }
 }
 
 @media (max-width: 768px){
     #nav{ padding: 5vw; }
     #nav-part2{ display: none; }
     #mobile-menu-btn { display: block; }
-    
-    /* Enhanced mobile navigation */
-    #mobile-menu-btn {
-        position: relative;
-        z-index: 1002;
-        background: none;
-        border: none;
-        color: white;
-        font-size: 24px;
-        padding: 8px;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-    }
-    
-    #mobile-menu-btn:hover {
-        background: rgba(56, 205, 250, 0.1);
-        color: #38cdfa;
-    }
-    
-    /* Improved mobile menu */
-    #mobile-menu {
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-    }
-    
-    #mobile-menu-links h4 {
-        font-size: 2.2rem;
-        padding: 15px 20px;
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        width: 100%;
-        text-align: center;
-    }
-    
-    #mobile-menu-links h4:hover {
-        background: rgba(56, 205, 250, 0.1);
-        transform: translateY(-2px);
-    }
-    
     .hero{ width: 90%; margin-left: 5%; }
     .hero h1, .hero h2, .hero h3{ font-size: 12vw; line-height: 12vw; }
-    .hero:nth-child(2){ margin-top: 12vh; }
-    
     #page2{ padding: 24vw 5vw 16vw 5vw; }
-    #page2 > h3{ font-size: 8vw; }
-    #page2 > h5{ font-size: 4vw; }
     #page2 img{ height: 8vmax; }
-    .skills-container{ 
-        gap: 8px; 
-        padding: 0 5px;
-        justify-content: center;
-    }
-    
     #page3{ padding: 10vh 5vw; margin: 10vh 0; }
-    #page3-content, #education-content, #certifications-content{ width: 90vw; margin-left: 5%; }
-    #page3-content>p{ 
-        font-size: 4vw; 
-        width: 100%; 
-        line-height: 1.6;
-        margin-bottom: 2rem;
-    }
-    
+    #page3-content, #education-content{ width: 90vw; margin-left: 5%; }
+    #page3-content>p{ font-size: 4vw; width: 100%; }
     #page4 .elem h1, #page4 .elem2 h1{ font-size: 12vw; }
-    
-    #projects-content h1, #education-content h1, #certifications-content h1, #page3-content h1{ font-size: 12vw; }
+    #projects-content h1, #education-content h1, #page3-content h1{ font-size: 12vw; }
     .projects-grid{ grid-template-columns: 1fr; }
-    .project-card{ 
-        margin-bottom: 1.5rem;
-        border-radius: 16px;
-    }
-    .project-body{ padding: 1.5rem; }
-    .project-body h3{ font-size: 1.4rem; }
-    .project-body p{ font-size: 1rem; line-height: 1.5; }
-    
-    .cert-grid{ grid-template-columns: 1fr; }
-    .cert-card{ 
-        padding: 1.5rem; 
-        flex-direction: column; 
-        text-align: center;
-        border-radius: 16px;
-    }
-    .cert-icon{ font-size: 2.5rem; margin-bottom: 1rem; }
-    
     #footer{ padding-left: 5vw; height: auto; padding-top: 8vh; padding-bottom: 8vh; }
     #footer h1{ font-size: 12vw; }
     #footer-div{ flex-direction: column; gap: 2rem; padding-right: 5vw; }
     .box{ width: 100%; }
-    #footer-div h3{ 
-        font-size: 4vw; 
-        padding: 10px 0;
-        text-align: center;
-    }
-    
+    #footer-div h3{ font-size: 4vw; }
     #page5{ padding: 12vh 5vw; }
-    #page7{ padding: 12vh 5vw; }
     #education-content h1 { font-size: 10vw; }
     .edu-item h3 { font-size: 1.5rem; }
     .edu-item p { font-size: 1rem; }
     .edu-highlights li { font-size: 0.9rem; }
-    .edu-timeline{ padding-left: 1.5rem; }
-    .edu-card{ padding: 1.2rem; }
 }
 
 @media (max-width: 480px){
-    /* Extra small mobile devices */
-    #nav{ padding: 4vw; }
-    
+    #nav-part2 h4{ font-size: 3.6vw; }
     .hero h1, .hero h2, .hero h3{ font-size: 14vw; line-height: 14vw; }
-    .hero:nth-child(2){ margin-top: 8vh; }
-    
-    #page2 > h3{ font-size: 10vw; }
-    #page2 > h5{ font-size: 5vw; }
     #page2 img{ height: 10vmax; }
-    .skills-container{ gap: 6px; }
-    
     .project-body h3{ font-size: 1.25rem; }
     .project-body p{ font-size: 0.95rem; }
-    .project-body{ padding: 1.2rem; }
-    
-    #mobile-menu-links h4 { 
-        font-size: 1.8rem; 
-        padding: 12px 15px;
-    }
-    
+    #mobile-menu { width: 80%; }
+    #mobile-menu-links h4 { font-size: 6vw; }
     #page3-content>p { font-size: 5vw; }
-    .cert-card{ 
-        padding: 1rem; 
-        margin-bottom: 1rem;
-    }
-    .cert-icon{ font-size: 2rem; }
-    .cert-info h3{ font-size: 1.2rem; }
-    
-    #footer h1{ font-size: 14vw; }
-    #footer-div h3{ font-size: 5vw; }
-    
-    /* Better touch targets */
-    #mobile-menu-btn {
-        padding: 12px;
-        font-size: 22px;
-    }
 }
 
 /* Laptop wide adjustments */
 @media (min-width: 1200px){
     #footer{ padding-left: 18vw; }
-    #certifications-content{ width: 65vw; margin-left: 25%; }
-    
-    /* Enhanced desktop experience */
-    .hero h1, .hero h2, .hero h3{ font-size: 6.5vw; line-height: 6.5vw; }
-    #page2 img{ height: 4.5vmax; }
-    .skills-container{ gap: 18px; }
 }
 
-/* Ultra-wide screens */
-@media (min-width: 1600px){
-    .hero h1, .hero h2, .hero h3{ font-size: 6vw; line-height: 6vw; }
-    #page2 > h3{ font-size: 4vmax; }
-    #page2 > h5{ font-size: 2vmax; }
-    #page3-content>p{ font-size: 1.8vw; }
+/* Extra responsive tweak for education */
+@media (max-width: 768px){
+    .edu-card{ padding: 1rem; }
 }
 
-/* Landscape orientation on mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-    .hero h1, .hero h2, .hero h3{ font-size: 8vw; line-height: 8vw; }
-    .hero:nth-child(2){ margin-top: 6vh; }
-    #page2{ padding: 15vw 5vw 10vw 5vw; }
-    #mobile-menu-links h4{ font-size: 1.6rem; }
+/* Animation for mobile menu */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* High DPI displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    #page2 img, .project-image img {
-        image-rendering: -webkit-optimize-contrast;
-        image-rendering: crisp-edges;
-    }
+#mobile-menu-links h4 {
+    animation: fadeIn 0.5s ease forwards;
 }
 
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    /* Already optimized for dark theme */
-}
-
-/* Print styles */
-@media print {
-    #mobile-menu, #crsr, #loader {
-        display: none !important;
-    }
-    
-    body {
-        background: white !important;
-        color: black !important;
-    }
-    
-    .hero h1, .hero h2, .hero h3 {
-        color: black !important;
-    }
-}
+#mobile-menu-links h4:nth-child(1) { animation-delay: 0.1s; }
+#mobile-menu-links h4:nth-child(2) { animation-delay: 0.2s; }
+#mobile-menu-links h4:nth-child(3) { animation-delay: 0.3s; }
+#mobile-menu-links h4:nth-child(4) { animation-delay: 0.4s; }
+#mobile-menu-links h4:nth-child(5) { animation-delay: 0.5s; }

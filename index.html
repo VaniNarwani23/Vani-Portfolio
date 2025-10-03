@@ -235,30 +235,6 @@
   <script src="https://cdn.jsdelivr.net/gh/automat/controlkit.js@master/bin/controlKit.min.js"></script>
   <script type="text/javascript"
     src="https://cdn.jsdelivr.net/gh/aayushchouhan24/sheryjs@main/dist/Shery.js"></script>
-    <script>document.addEventListener("DOMContentLoaded", () => {
-  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-  const mobileMenu = document.getElementById("mobile-menu");
-  const mobileMenuClose = document.getElementById("mobile-menu-close");
-  const navLinks = document.querySelectorAll("#mobile-menu-links .nav-link");
-
-  // Open menu
-  mobileMenuBtn.addEventListener("click", () => {
-    mobileMenu.classList.add("show");
-  });
-
-  // Close menu
-  mobileMenuClose.addEventListener("click", () => {
-    mobileMenu.classList.remove("show");
-  });
-
-  // Close menu when a link is clicked
-  navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      mobileMenu.classList.remove("show");
-    });
-  });
-});
-</script>
   <script src="script.js"></script>
 </body>
 </html>

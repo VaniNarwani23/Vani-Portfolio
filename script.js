@@ -31,10 +31,24 @@ function locomotiveAnimation() {
   document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
+
+      // Close mobile menu if open
+      const mobileMenu = document.querySelector('#mobile-menu');
+      if (mobileMenu && mobileMenu.classList.contains('show')) {
+        mobileMenu.classList.remove('show');
+      }
+
       const targetSelector = link.getAttribute('data-target');
       const targetElement = document.querySelector(targetSelector);
       if (targetElement) {
-        locoScroll.scrollTo(targetElement);
+        // Small delay to allow menu to close smoothly
+        setTimeout(() => {
+          locoScroll.scrollTo(targetElement, {
+            offset: 0,
+            duration: 1000,
+            easing: [0.25, 0.0, 0.35, 1.0]
+          });
+        }, 100);
       }
     });
   });
@@ -96,18 +110,31 @@ locomotiveAnimation();
 footerAnimation();
 
 // ✅ Mobile Menu Toggle
-const mobileMenuBtn = document.querySelector("#mobile-menu-btn");
-const mobileMenu = document.querySelector("#mobile-menu");
-const mobileMenuClose = document.querySelector("#mobile-menu-close");
+function initMobileMenu() {
+  const mobileMenuBtn = document.querySelector("#mobile-menu-btn");
+  const mobileMenu = document.querySelector("#mobile-menu");
+  const mobileMenuClose = document.querySelector("#mobile-menu-close");
 
-mobileMenuBtn.addEventListener("click", () => {
-  mobileMenu.classList.add("show");
-});
-mobileMenuClose.addEventListener("click", () => {
-  mobileMenu.classList.remove("show");
-});
-document.querySelectorAll("#mobile-menu-links .nav-link").forEach(link => {
-  link.addEventListener("click", () => {
-    mobileMenu.classList.remove("show");
-  });
-});
+  if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileMenu.classList.add("show");
+      document.body.style.overflow = 'hidden';
+    });
+
+    mobileMenuClose.addEventListener("click", () => {
+      mobileMenu.classList.remove("show");
+      document.body.style.overflow = '';
+    });
+
+    // Close menu when clicking outside
+    mobileMenu.addEventListener("click", (e) => {
+      if (e.target === mobileMenu) {
+        mobileMenu.classList.remove("show");
+        document.body.style.overflow = '';
+      }
+    });
+  }
+}
+
+// Initialize mobile menu
+initMobileMenu();

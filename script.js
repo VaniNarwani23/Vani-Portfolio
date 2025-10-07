@@ -34,8 +34,13 @@ function locomotiveAnimation() {
 
       // Close mobile menu if open
       const mobileMenu = document.querySelector('#mobile-menu');
+      const mobileMenuOverlay = document.querySelector('#mobile-menu-overlay');
       if (mobileMenu && mobileMenu.classList.contains('show')) {
         mobileMenu.classList.remove('show');
+        if (mobileMenuOverlay) {
+          mobileMenuOverlay.classList.remove('show');
+        }
+        document.body.style.overflow = '';
       }
 
       const targetSelector = link.getAttribute('data-target');
@@ -48,7 +53,7 @@ function locomotiveAnimation() {
             duration: 1000,
             easing: [0.25, 0.0, 0.35, 1.0]
           });
-        }, 100);
+        }, 300);
       }
     });
   });
@@ -114,25 +119,27 @@ function initMobileMenu() {
   const mobileMenuBtn = document.querySelector("#mobile-menu-btn");
   const mobileMenu = document.querySelector("#mobile-menu");
   const mobileMenuClose = document.querySelector("#mobile-menu-close");
+  const mobileMenuOverlay = document.querySelector("#mobile-menu-overlay");
 
-  if (mobileMenuBtn && mobileMenu && mobileMenuClose) {
+  if (mobileMenuBtn && mobileMenu && mobileMenuClose && mobileMenuOverlay) {
+    // Open menu
     mobileMenuBtn.addEventListener("click", () => {
       mobileMenu.classList.add("show");
+      mobileMenuOverlay.classList.add("show");
       document.body.style.overflow = 'hidden';
     });
 
-    mobileMenuClose.addEventListener("click", () => {
+    // Close menu
+    const closeMenu = () => {
       mobileMenu.classList.remove("show");
+      mobileMenuOverlay.classList.remove("show");
       document.body.style.overflow = '';
-    });
+    };
 
-    // Close menu when clicking outside
-    mobileMenu.addEventListener("click", (e) => {
-      if (e.target === mobileMenu) {
-        mobileMenu.classList.remove("show");
-        document.body.style.overflow = '';
-      }
-    });
+    mobileMenuClose.addEventListener("click", closeMenu);
+
+    // Close menu when clicking overlay
+    mobileMenuOverlay.addEventListener("click", closeMenu);
   }
 }
 

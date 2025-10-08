@@ -1,9 +1,11 @@
+let locoScroll;
+
 function locomotiveAnimation() {
   gsap.registerPlugin(ScrollTrigger);
 
   const scrollContainer = document.querySelector("#main");
 
-  const locoScroll = new LocomotiveScroll({
+  locoScroll = new LocomotiveScroll({
     el: scrollContainer,
     smooth: true,
     lerp: 0.1,
@@ -27,36 +29,7 @@ function locomotiveAnimation() {
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
 
-  // ✅ Smooth scroll nav links
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-
-      // Close mobile menu if open
-      const mobileMenu = document.querySelector('#mobile-menu');
-      const mobileMenuOverlay = document.querySelector('#mobile-menu-overlay');
-      if (mobileMenu && mobileMenu.classList.contains('show')) {
-        mobileMenu.classList.remove('show');
-        if (mobileMenuOverlay) {
-          mobileMenuOverlay.classList.remove('show');
-        }
-        document.body.style.overflow = '';
-      }
-
-      const targetSelector = link.getAttribute('data-target');
-      const targetElement = document.querySelector(targetSelector);
-      if (targetElement) {
-        // Small delay to allow menu to close smoothly
-        setTimeout(() => {
-          locoScroll.scrollTo(targetElement, {
-            offset: 0,
-            duration: 1000,
-            easing: [0.25, 0.0, 0.35, 1.0]
-          });
-        }, 300);
-      }
-    });
-  });
+  return locoScroll;
 }
 
 function loadingAnimation() {
@@ -109,12 +82,6 @@ function footerAnimation() {
   })
 }
 
-cursorAnimation();
-loadingAnimation();
-locomotiveAnimation();
-footerAnimation();
-
-// ✅ Mobile Menu Toggle
 function initMobileMenu() {
   const mobileMenuBtn = document.querySelector("#mobile-menu-btn");
   const mobileMenu = document.querySelector("#mobile-menu");
@@ -122,14 +89,12 @@ function initMobileMenu() {
   const mobileMenuOverlay = document.querySelector("#mobile-menu-overlay");
 
   if (mobileMenuBtn && mobileMenu && mobileMenuClose && mobileMenuOverlay) {
-    // Open menu
     mobileMenuBtn.addEventListener("click", () => {
       mobileMenu.classList.add("show");
       mobileMenuOverlay.classList.add("show");
       document.body.style.overflow = 'hidden';
     });
 
-    // Close menu
     const closeMenu = () => {
       mobileMenu.classList.remove("show");
       mobileMenuOverlay.classList.remove("show");
@@ -137,11 +102,45 @@ function initMobileMenu() {
     };
 
     mobileMenuClose.addEventListener("click", closeMenu);
-
-    // Close menu when clicking overlay
     mobileMenuOverlay.addEventListener("click", closeMenu);
   }
 }
 
-// Initialize mobile menu
+function initNavLinks() {
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const mobileMenu = document.querySelector('#mobile-menu');
+      const mobileMenuOverlay = document.querySelector('#mobile-menu-overlay');
+
+      if (mobileMenu && mobileMenu.classList.contains('show')) {
+        mobileMenu.classList.remove('show');
+        if (mobileMenuOverlay) {
+          mobileMenuOverlay.classList.remove('show');
+        }
+        document.body.style.overflow = '';
+      }
+
+      const targetSelector = link.getAttribute('data-target');
+      const targetElement = document.querySelector(targetSelector);
+
+      if (targetElement && locoScroll) {
+        setTimeout(() => {
+          locoScroll.scrollTo(targetElement, {
+            offset: 0,
+            duration: 1000,
+            easing: [0.25, 0.0, 0.35, 1.0]
+          });
+        }, 300);
+      }
+    });
+  });
+}
+
+cursorAnimation();
+loadingAnimation();
+locomotiveAnimation();
+footerAnimation();
 initMobileMenu();
+initNavLinks();

@@ -245,18 +245,26 @@ html , body{
 
 #mobile-menu-close {
     position: absolute;
-    top: 30px;
-    right: 30px;
-    font-size: 24px;
+    top: 25px;
+    right: 25px;
+    font-size: 28px;
     cursor: pointer;
     color: white;
     transition: transform 0.3s ease, color 0.3s ease;
     z-index: 2001;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #mobile-menu-close:hover {
     transform: rotate(90deg);
     color: #38cdfa;
+}
+
+#mobile-menu-close:active {
+    transform: scale(0.9);
 }
 
 #mobile-menu-links {
@@ -295,6 +303,11 @@ html , body{
 #mobile-menu-links h4:hover {
     color: #38cdfa;
     transform: translateX(5px);
+}
+
+#mobile-menu-links h4:active {
+    color: #38cdfa;
+    transform: translateX(8px);
 }
 
 .hero{

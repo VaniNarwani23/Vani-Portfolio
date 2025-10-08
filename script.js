@@ -89,13 +89,19 @@ function initMobileMenu() {
   const mobileMenuOverlay = document.querySelector("#mobile-menu-overlay");
 
   if (mobileMenuBtn && mobileMenu && mobileMenuClose && mobileMenuOverlay) {
-    mobileMenuBtn.addEventListener("click", () => {
+    mobileMenuBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       mobileMenu.classList.add("show");
       mobileMenuOverlay.classList.add("show");
       document.body.style.overflow = 'hidden';
     });
 
-    const closeMenu = () => {
+    const closeMenu = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       mobileMenu.classList.remove("show");
       mobileMenuOverlay.classList.remove("show");
       document.body.style.overflow = '';
@@ -103,6 +109,13 @@ function initMobileMenu() {
 
     mobileMenuClose.addEventListener("click", closeMenu);
     mobileMenuOverlay.addEventListener("click", closeMenu);
+  } else {
+    console.warn('Mobile menu elements not found:', {
+      btn: !!mobileMenuBtn,
+      menu: !!mobileMenu,
+      close: !!mobileMenuClose,
+      overlay: !!mobileMenuOverlay
+    });
   }
 }
 
@@ -113,8 +126,9 @@ function initNavLinks() {
 
       const mobileMenu = document.querySelector('#mobile-menu');
       const mobileMenuOverlay = document.querySelector('#mobile-menu-overlay');
+      const isMobileMenuOpen = mobileMenu && mobileMenu.classList.contains('show');
 
-      if (mobileMenu && mobileMenu.classList.contains('show')) {
+      if (isMobileMenuOpen) {
         mobileMenu.classList.remove('show');
         if (mobileMenuOverlay) {
           mobileMenuOverlay.classList.remove('show');
@@ -125,22 +139,38 @@ function initNavLinks() {
       const targetSelector = link.getAttribute('data-target');
       const targetElement = document.querySelector(targetSelector);
 
-      if (targetElement && locoScroll) {
+      if (targetElement) {
+        const scrollDelay = isMobileMenuOpen ? 350 : 0;
+
         setTimeout(() => {
-          locoScroll.scrollTo(targetElement, {
-            offset: 0,
-            duration: 1000,
-            easing: [0.25, 0.0, 0.35, 1.0]
-          });
-        }, 300);
+          if (locoScroll) {
+            try {
+              locoScroll.scrollTo(targetElement, {
+                offset: 0,
+                duration: 1000,
+                easing: [0.25, 0.0, 0.35, 1.0]
+              });
+            } catch (err) {
+              console.log('Locomotive scroll error, using fallback');
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          } else {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, scrollDelay);
       }
     });
   });
 }
 
-cursorAnimation();
-loadingAnimation();
-locomotiveAnimation();
-footerAnimation();
-initMobileMenu();
-initNavLinks();
+document.addEventListener('DOMContentLoaded', function() {
+  cursorAnimation();
+  loadingAnimation();
+  locomotiveAnimation();
+  footerAnimation();
+
+  setTimeout(() => {
+    initMobileMenu();
+    initNavLinks();
+  }, 100);
+});

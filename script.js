@@ -1,4 +1,3 @@
-
 let locoScroll;
 
 function locomotiveAnimation() {
@@ -9,8 +8,7 @@ function locomotiveAnimation() {
   locoScroll = new LocomotiveScroll({
     el: scrollContainer,
     smooth: true,
-    lerp: 0.1,
-    getDirection: true
+    lerp: 0.1
   });
 
   locoScroll.on("scroll", ScrollTrigger.update);

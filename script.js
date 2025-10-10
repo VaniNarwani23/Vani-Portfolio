@@ -1,3 +1,4 @@
+
 let locoScroll;
 
 function locomotiveAnimation() {
@@ -95,6 +96,9 @@ function initMobileMenu() {
       mobileMenu.classList.add("show");
       mobileMenuOverlay.classList.add("show");
       document.body.style.overflow = 'hidden';
+      if (locoScroll) {
+        locoScroll.stop();
+      }
     });
 
     const closeMenu = (e) => {
@@ -105,6 +109,9 @@ function initMobileMenu() {
       mobileMenu.classList.remove("show");
       mobileMenuOverlay.classList.remove("show");
       document.body.style.overflow = '';
+      if (locoScroll) {
+        locoScroll.start();
+      }
     };
 
     mobileMenuClose.addEventListener("click", closeMenu);
@@ -134,6 +141,9 @@ function initNavLinks() {
           mobileMenuOverlay.classList.remove('show');
         }
         document.body.style.overflow = '';
+        if (locoScroll) {
+          locoScroll.start();
+        }
       }
 
       const targetSelector = link.getAttribute('data-target');
@@ -143,7 +153,25 @@ function initNavLinks() {
         const scrollDelay = isMobileMenuOpen ? 350 : 0;
 
         setTimeout(() => {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (locoScroll) {
+            try {
+              locoScroll.scrollTo(targetElement, {
+                offset: 0,
+                duration: 1200,
+                easing: [0.25, 0.0, 0.35, 1.0],
+                onComplete: () => {
+                  if(locoScroll) {
+                    locoScroll.update();
+                  }
+                }
+              });
+            } catch (err) {
+              console.log('Locomotive scroll error, using fallback');
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          } else {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }, scrollDelay);
       }
     });

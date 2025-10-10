@@ -168,9 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
   loadingAnimation();
   locomotiveAnimation();
   footerAnimation();
-
-  setTimeout(() => {
-    initMobileMenu();
-    initNavLinks();
-  }, 100);
+  initMobileMenu();
+  initNavLinks();
 });

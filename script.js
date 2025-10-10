@@ -143,20 +143,7 @@ function initNavLinks() {
         const scrollDelay = isMobileMenuOpen ? 350 : 0;
 
         setTimeout(() => {
-          if (locoScroll) {
-            try {
-              locoScroll.scrollTo(targetElement, {
-                offset: 0,
-                duration: 1000,
-                easing: [0.25, 0.0, 0.35, 1.0]
-              });
-            } catch (err) {
-              console.log('Locomotive scroll error, using fallback');
-              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          } else {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, scrollDelay);
       }
     });

@@ -1,38 +1,3 @@
-
-let locoScroll;
-
-function locomotiveAnimation() {
-  gsap.registerPlugin(ScrollTrigger);
-
-  const scrollContainer = document.querySelector("#main");
-
-  locoScroll = new LocomotiveScroll({
-    el: scrollContainer,
-    smooth: true,
-    lerp: 0.1,
-    getDirection: true
-  });
-
-  locoScroll.on("scroll", ScrollTrigger.update);
-
-  ScrollTrigger.scrollerProxy(scrollContainer, {
-    scrollTop(value) {
-      return arguments.length
-        ? locoScroll.scrollTo(value, 0, 0)
-        : locoScroll.scroll.instance.scroll.y;
-    },
-    getBoundingClientRect() {
-      return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    },
-    pinType: scrollContainer.style.transform ? "transform" : "fixed",
-  });
-
-  ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
-  ScrollTrigger.refresh();
-
-  return locoScroll;
-}
-
 function loadingAnimation() {
   var tl = gsap.timeline();
   tl.from(".line h1", { y: 150, stagger: 0.25, duration: 0.6, delay: 0.5 });
@@ -48,7 +13,7 @@ function loadingAnimation() {
           h5timer.innerHTML = grow;
         }
       }, 33);
-    }
+    },
   });
   tl.to("#loader", { opacity: 0, duration: 0.2, delay: 3 });
   tl.from("#page1", { y: -1600, opacity: 0, duration: 0.6, ease: "power4" });
@@ -63,24 +28,25 @@ function cursorAnimation() {
 }
 
 function footerAnimation() {
-  var clutter = "", clutter2 = "";
+  var clutter = "",
+    clutter2 = "";
   document.querySelector("#footer h1").textContent.split("").forEach(function (elem) {
-    clutter += `<span>${elem}</span>`
-  })
+    clutter += `<span>${elem}</span>`;
+  });
   document.querySelector("#footer h1").innerHTML = clutter;
   document.querySelector("#footer h2").textContent.split("").forEach(function (elem) {
-    clutter2 += `<span>${elem}</span>`
-  })
+    clutter2 += `<span>${elem}</span>`;
+  });
   document.querySelector("#footer h2").innerHTML = clutter2;
 
   document.querySelector("#footer-text").addEventListener("mouseenter", function () {
-    gsap.to("#footer h1 span", { opacity: 0, stagger: 0.05 })
-    gsap.to("#footer h2 span", { delay: 0.35, opacity: 1, stagger: 0.1 })
-  })
+    gsap.to("#footer h1 span", { opacity: 0, stagger: 0.05 });
+    gsap.to("#footer h2 span", { delay: 0.35, opacity: 1, stagger: 0.1 });
+  });
   document.querySelector("#footer-text").addEventListener("mouseleave", function () {
-    gsap.to("#footer h1 span", { opacity: 1, stagger: 0.1, delay: 0.35 })
-    gsap.to("#footer h2 span", { opacity: 0, stagger: 0.05 })
-  })
+    gsap.to("#footer h1 span", { opacity: 1, stagger: 0.1, delay: 0.35 });
+    gsap.to("#footer h2 span", { opacity: 0, stagger: 0.05 });
+  });
 }
 
 function initMobileMenu() {
@@ -95,10 +61,7 @@ function initMobileMenu() {
       e.stopPropagation();
       mobileMenu.classList.add("show");
       mobileMenuOverlay.classList.add("show");
-      document.body.style.overflow = 'hidden';
-      if (locoScroll) {
-        locoScroll.stop();
-      }
+      document.body.style.overflow = "hidden";
     });
 
     const closeMenu = (e) => {
@@ -108,80 +71,55 @@ function initMobileMenu() {
       }
       mobileMenu.classList.remove("show");
       mobileMenuOverlay.classList.remove("show");
-      document.body.style.overflow = '';
-      if (locoScroll) {
-        locoScroll.start();
-      }
+      document.body.style.overflow = "";
     };
 
     mobileMenuClose.addEventListener("click", closeMenu);
     mobileMenuOverlay.addEventListener("click", closeMenu);
   } else {
-    console.warn('Mobile menu elements not found:', {
+    console.warn("Mobile menu elements not found:", {
       btn: !!mobileMenuBtn,
       menu: !!mobileMenu,
       close: !!mobileMenuClose,
-      overlay: !!mobileMenuOverlay
+      overlay: !!mobileMenuOverlay,
     });
   }
 }
 
 function initNavLinks() {
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", (e) => {
       e.preventDefault();
 
-      const mobileMenu = document.querySelector('#mobile-menu');
-      const mobileMenuOverlay = document.querySelector('#mobile-menu-overlay');
-      const isMobileMenuOpen = mobileMenu && mobileMenu.classList.contains('show');
+      const mobileMenu = document.querySelector("#mobile-menu");
+      const mobileMenuOverlay = document.querySelector("#mobile-menu-overlay");
+      const isMobileMenuOpen = mobileMenu && mobileMenu.classList.contains("show");
 
       if (isMobileMenuOpen) {
-        mobileMenu.classList.remove('show');
+        mobileMenu.classList.remove("show");
         if (mobileMenuOverlay) {
-          mobileMenuOverlay.classList.remove('show');
+          mobileMenuOverlay.classList.remove("show");
         }
-        document.body.style.overflow = '';
-        if (locoScroll) {
-          locoScroll.start();
-        }
+        document.body.style.overflow = "";
       }
 
-      const targetSelector = link.getAttribute('data-target');
+      const targetSelector = link.getAttribute("data-target");
       const targetElement = document.querySelector(targetSelector);
 
       if (targetElement) {
         const scrollDelay = isMobileMenuOpen ? 350 : 0;
 
         setTimeout(() => {
-          if (locoScroll) {
-            try {
-              locoScroll.scrollTo(targetElement, {
-                offset: 0,
-                duration: 1200,
-                easing: [0.25, 0.0, 0.35, 1.0],
-                onComplete: () => {
-                  if(locoScroll) {
-                    locoScroll.update();
-                  }
-                }
-              });
-            } catch (err) {
-              console.log('Locomotive scroll error, using fallback');
-              targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          } else {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
         }, scrollDelay);
       }
     });
   });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   cursorAnimation();
   loadingAnimation();
-  locomotiveAnimation();
   footerAnimation();
   initMobileMenu();
   initNavLinks();
